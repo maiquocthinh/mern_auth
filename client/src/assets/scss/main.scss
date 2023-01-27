@@ -1,0 +1,25 @@
+// font
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500&display=swap');
+
+@import 'variables';
+@import 'mixins';
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 62.5%;
+	line-height: 1.6em;
+}
+
+body {
+	font-family: 'Prompt';
+}
+
+img {
+	max-width: 100%;
+	width: 100%;
+}

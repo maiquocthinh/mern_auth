@@ -1,25 +1,76 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import AuthLayout from './Layouts/AuthLayout'
+import ProfileLayout from './Layouts/ProfileLayout'
+import Login from './components/Login'
+import Register from './components/Register'
+import ForgotPass from './components/ForgotPass'
+import ResetPass from './components/ResetPass'
+import Activate from './components/Activate'
+
+import './assets/scss/main.scss'
+
+const App = () => {
+	const isLogined = !false
+
+	return (
+		<BrowserRouter>
+			<Routes>
+				<Route
+					path="/"
+					element={
+						isLogined ? (
+							<ProfileLayout />
+						) : (
+							<AuthLayout>
+								<Login />
+							</AuthLayout>
+						)
+					}
+				/>
+				<Route
+					path="/login"
+					element={
+						<AuthLayout>
+							<Login />
+						</AuthLayout>
+					}
+				/>
+				<Route
+					path="/register"
+					element={
+						<AuthLayout>
+							<Register />
+						</AuthLayout>
+					}
+				/>
+				<Route
+					path="/forgot-password"
+					element={
+						<AuthLayout>
+							<ForgotPass />
+						</AuthLayout>
+					}
+				/>
+				<Route
+					path="/reset-password/:token"
+					element={
+						<AuthLayout>
+							<ResetPass />
+						</AuthLayout>
+					}
+				/>
+				<Route
+					path="/api/auth/activate/:activate_token"
+					element={
+						<AuthLayout>
+							<Activate />
+						</AuthLayout>
+					}
+				/>
+			</Routes>
+		</BrowserRouter>
+	)
 }
 
-export default App;
+export default App

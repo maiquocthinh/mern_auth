@@ -1,0 +1,340 @@
+@import '../../assets//scss/variables';
+@import '../../assets//scss/mixins';
+
+.profilelayout {
+	height: 100vh;
+	background-image: url(https://i.imgur.com/7Xb3esI.png);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	overflow-y: auto;
+
+	&_appbar {
+		position: fixed;
+		top: 0;
+		left: 0;
+		background-color: $purple-light;
+		height: 52px;
+		width: 100%;
+		padding: 0 24px;
+		z-index: 2;
+		box-shadow: 0 4px 8px #333;
+
+		background-image: url(https://i.imgur.com/7Xb3esI.png);
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+
+		.appbar_wrapper {
+			display: flex;
+			justify-content: space-between;
+
+			.appbar_logo {
+				width: 50px;
+				height: 50px;
+				padding: 4px;
+				display: flex;
+				align-items: center;
+				gap: 8px;
+
+				img {
+				}
+
+				p {
+					font-size: 1.8rem;
+					font-weight: 600;
+					text-transform: capitalize;
+					letter-spacing: 4px;
+					color: transparent;
+					background: linear-gradient(to left bottom, #3ff0f0 0%, #a971ee 100%);
+					-webkit-background-clip: text;
+				}
+			}
+
+			.appbar_avatar {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+
+				&__box {
+					img {
+						display: none;
+						@include for-desktop {
+							display: inline;
+						}
+					}
+				}
+
+				> svg {
+					font-size: 1.6rem;
+					margin-left: 10px;
+					cursor: pointer;
+					color: #3ff0f0;
+					@include for-desktop {
+						display: none;
+					}
+				}
+			}
+		}
+	}
+	&_sidebar {
+		position: fixed;
+		top: 60px;
+		right: 32px;
+		height: 100vh;
+		min-width: 280px;
+		display: none;
+		z-index: 2;
+
+		&.open {
+			display: initial;
+		}
+
+		.sidebar_menu {
+			background-color: $purple-light;
+			min-width: 200px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: 8px;
+			box-shadow: 0 4px 8px #333;
+
+			background-image: url(https://i.imgur.com/7Xb3esI.png);
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+
+			ul {
+				list-style: none;
+				padding: 10px 4px;
+				width: 100%;
+
+				> li {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					gap: 8px;
+					font-size: 1.6rem;
+					font-weight: 500;
+					color: whitesmoke;
+					cursor: pointer;
+					padding: 12px 32px;
+					width: 100%;
+
+					&:hover {
+						background-color: rgba($color: #5b35c2, $alpha: 0.3);
+						border-radius: 4px;
+					}
+
+					&:nth-child(1) {
+						svg {
+							color: $blue;
+						}
+
+						&:hover {
+							p {
+								color: $blue;
+								transition: all 0.3s ease-in;
+							}
+						}
+					}
+
+					&:nth-child(2) {
+						svg {
+							color: $yellow;
+						}
+
+						&:hover {
+							p {
+								color: $yellow;
+								transition: all 0.3s ease-in;
+							}
+						}
+					}
+
+					&:nth-child(3) {
+						svg {
+							color: $pink;
+						}
+
+						&:hover {
+							p {
+								color: $pink;
+								transition: all 0.3s ease-in;
+							}
+						}
+					}
+
+					p {
+						font-size: inherit;
+						text-transform: uppercase;
+					}
+				}
+			}
+		}
+	}
+	&_content {
+		margin-top: 60px;
+		margin-left: 12px;
+		margin-right: 12px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		gap: 22px;
+		padding: 0 32px;
+
+		&__feed {
+			background-color: $purple-light;
+			padding: 24px;
+			color: $purple-lighter;
+			border-radius: 12px;
+			overflow: hidden;
+			flex-grow: 1;
+			order: 2;
+			box-shadow: 0 4px 8px #333;
+
+			background-image: url(https://i.imgur.com/7Xb3esI.png);
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+
+			.feed_date {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+				margin-bottom: 12px;
+
+				p {
+					font-size: 1.4rem;
+					font-weight: 600;
+				}
+			}
+
+			.feed_img {
+				border-radius: 12px;
+				overflow: hidden;
+				max-height: 300px;
+			}
+
+			.feed_content {
+				font-size: 1.4rem;
+				font-weight: 500;
+				margin-top: 12px;
+				background-color: rgba($color: #5b35c2, $alpha: 0.3);
+				padding: 12px;
+				border-radius: 12px;
+				color: whitesmoke;
+			}
+		}
+		&__profile {
+			background-color: $purple-light;
+			padding: 20px;
+			border-radius: 12px;
+			flex-grow: 1;
+			order: 1;
+			box-shadow: 0 4px 8px #333;
+
+			background-image: url(https://i.imgur.com/7Xb3esI.png);
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+
+			.profile_avatar {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				position: relative;
+
+				&__child {
+					width: 180px;
+					height: 180px;
+					object-fit: cover;
+					border-radius: 50%;
+					overflow: hidden;
+					border: 2px solid whitesmoke;
+
+					img {
+						height: 100%;
+					}
+				}
+
+				svg {
+					display: block;
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50%, -50%);
+					fill: #bc90f3;
+					height: 100%;
+					width: 120px;
+					opacity: 0;
+					cursor: pointer;
+
+					&:hover {
+						opacity: 0.7;
+					}
+				}
+
+				input[type='file'] {
+					display: none;
+				}
+			}
+
+			.profile_input {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+
+				> button {
+					padding: 8px 16px;
+					min-width: 230px;
+					height: 36px;
+					outline: none;
+					border: none;
+					border-radius: 12px;
+					font-size: 1.6rem;
+					font-weight: 600;
+					color: #f2efef;
+					text-transform: capitalize;
+					background: linear-gradient(to left bottom, #30cfd0 0%, #5b35c2 100%);
+					box-shadow: 0 4px 10px #3e3e3e;
+					cursor: pointer;
+					transition: all 400ms ease-in;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+
+					&:hover {
+						background: linear-gradient(to right, #30cfd0 0%, #5b35c2 100%);
+					}
+				}
+			}
+		}
+	}
+
+	.appbar_avatar__box {
+		img {
+			width: 40px;
+			height: 40px;
+			object-fit: cover;
+			border-radius: 50%;
+		}
+	}
+}
+@include for-desktop {
+	.profilelayout_sidebar {
+		display: initial;
+		left: 32px;
+		right: unset;
+	}
+	.profilelayout_content {
+		padding-left: 333px;
+		flex-direction: row;
+	}
+	.profilelayout_content_profilelayout_content__feed_feed {
+		order: 1;
+	}
+	.profilelayout_content__profile {
+		order: 2;
+	}
+}
