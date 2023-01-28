@@ -23,3 +23,13 @@ img {
 	max-width: 100%;
 	width: 100%;
 }
+
+// custom toast
+.toast-failed {
+	background: $pink !important;
+	color: #fff;
+}
+.toast-success {
+	background: $green !important;
+	color: #fff;
+}
