@@ -61,7 +61,7 @@ const App = () => {
 					}
 				/>
 				<Route
-					path="/api/auth/activate/:activate_token"
+					path="/api/auth/activate/:activation_token"
 					element={
 						<AuthLayout>
 							<Activate />

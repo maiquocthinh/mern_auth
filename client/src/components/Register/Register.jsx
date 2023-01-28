@@ -41,28 +41,24 @@ const Register = () => {
 		if (isEmpty(name) || isEmpty(password))
 			return toast('Please fill in all fields.', {
 				className: 'toast-failed',
-				bodyClassName: 'toast-failed',
 				pauseOnHover: false,
 			})
 		// check email format
 		if (!isEmail(email))
 			return toast('Please enter a valid email address.', {
 				className: 'toast-failed',
-				bodyClassName: 'toast-failed',
 				pauseOnHover: false,
 			})
 		// check password length
 		if (isLengthNotEnough(password))
 			return toast('Password must be at least 6 characters.', {
 				className: 'toast-failed',
-				bodyClassName: 'toast-failed',
 				pauseOnHover: false,
 			})
 		// check confirm password is match with password
 		if (!isMatch(password, cf_password))
 			return toast('Password did not match.', {
 				className: 'toast-failed',
-				bodyClassName: 'toast-failed',
 				pauseOnHover: false,
 			})
 
@@ -70,13 +66,11 @@ const Register = () => {
 			const response = await axios.post('/api/auth/register', { name, email, password })
 			toast(response.data.msg, {
 				className: 'toast-success',
-				bodyClassName: 'toast-success',
 				pauseOnHover: false,
 			})
 		} catch (error) {
 			toast(error.response.data.msg, {
 				className: 'toast-failed',
-				bodyClassName: 'toast-failed',
 				pauseOnHover: false,
 			})
 		}

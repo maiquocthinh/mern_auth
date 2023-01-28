@@ -26,10 +26,18 @@ img {
 
 // custom toast
 .toast-failed {
-	background: $pink !important;
+	background: linear-gradient(125deg, rgba(233, 77, 77, 0.8) 37%, rgba(106, 0, 255, 0.8) 100%) !important;
 	color: #fff;
+	font-size: 1.4rem;
+	font-weight: 500;
+	box-shadow: -2px 2px 4px #333;
+	border: 1px solid rgb(122, 119, 119);
 }
 .toast-success {
-	background: $green !important;
+	background: linear-gradient(125deg, rgba(113, 233, 77, 0.8) 37%, rgba(106, 0, 255, 0.8) 100%) !important;
 	color: #fff;
+	font-size: 1.4rem;
+	font-weight: 500;
+	box-shadow: -2px 2px 4px #333;
+	border: 1px solid rgb(122, 119, 119);
 }
