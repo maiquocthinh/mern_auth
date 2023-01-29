@@ -34,28 +34,31 @@ const Login = () => {
 
 		// check fields
 		if (isEmpty(email) || isEmpty(password))
-			return toast('Please fill in all fields.', {
+			return toast.error('Please fill in all fields.', {
 				className: 'toast-failed',
 				pauseOnHover: false,
 			})
 		// check email format
 		if (!isEmail(email))
-			return toast('Please enter a valid email address.', {
+			return toast.error('Please enter a valid email address.', {
 				className: 'toast-failed',
 				pauseOnHover: false,
 			})
 		// login
 		try {
 			const response = await axios.post('/api/auth/login', { email, password })
-			toast(response.data.msg, {
+			toast.success(response.data.msg, {
 				className: 'toast-success',
 				pauseOnHover: false,
 			})
-			localStorage.setItem('_appSigngin', true)
-			dispatch({ type: 'SIGNIN' })
-			if (loaction.pathname !== '/') navigate('/')
+			// delay redirect
+			setTimeout(() => {
+				localStorage.setItem('_appSigngin', true)
+				dispatch({ type: 'SIGNIN' })
+				if (loaction.pathname !== '/') navigate('/')
+			}, 3000)
 		} catch (error) {
-			toast(error.response.data.msg, {
+			toast.error(error.response.data.msg, {
 				className: 'toast-failed',
 				pauseOnHover: false,
 			})

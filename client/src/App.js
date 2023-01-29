@@ -44,7 +44,7 @@ const App = () => {
 				<Route
 					path="/"
 					element={
-						isLoggedIn ? (
+						localStorage.getItem('_appSigngin') ? (
 							<ProfileLayout />
 						) : (
 							<AuthLayout>

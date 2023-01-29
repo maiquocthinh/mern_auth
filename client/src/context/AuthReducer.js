@@ -24,6 +24,8 @@ const AuthReducer = (state, action) => {
 			return {
 				...state,
 				isLoggedIn: false,
+				userInfo: {},
+				accessToken: '',
 			}
 		default:
 			throw new Error('Invalid Action.')

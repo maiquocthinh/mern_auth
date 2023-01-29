@@ -11,11 +11,21 @@ import EyeOffLineIcon from 'remixicon-react/EyeOffLineIcon'
 import Upload2FillIcon from 'remixicon-react/Upload2FillIcon'
 import { useState } from 'react'
 import { useAuthStore } from '../../context/AuthHooks'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { isEmpty, isLengthNotEnough, isMatch } from '../../helpers'
 
 const ProfileLayout = () => {
 	const [sidebarVisible, setSidebarVisible] = useState(false)
 	const [visiblePass, setVisiblePass] = useState(false)
-	const { userInfo } = useAuthStore()
+	const [avatarFile, setAvatarFile] = useState()
+	const { userInfo, accessToken, dispatch } = useAuthStore()
+	const navigate = useNavigate()
+	const initDataState = { name: userInfo.name, password: '', cf_password: '' }
+	const [data, setData] = useState(initDataState)
+	const { name, password, cf_password } = data
 
 	const handleIconClick = () => {
 		setVisiblePass(!visiblePass)
@@ -25,8 +35,152 @@ const ProfileLayout = () => {
 		setSidebarVisible(!sidebarVisible)
 	}
 
+	const handleLogout = () => {
+		localStorage.removeItem('_appSigngin')
+		dispatch({ type: 'SIGNOUT' })
+		navigate('/login')
+	}
+
+	const handleChangeAvatar = (e) => {
+		e.preventDefault()
+		const file = e.target.files[0]
+		setAvatarFile(file)
+		URL.revokeObjectURL(userInfo.avatar)
+		dispatch({ type: 'UPDATE_USER_AVATAR', payload: URL.createObjectURL(file) })
+
+		// const formData = new FormData()
+		// formData.append('avatar', file)
+
+		/* try {
+			const response = await toast.promise(
+				axios.post('/api/upload', formData, {
+					headers: { 'Content-Type': 'multipart/form-data', Authorization: accessToken },
+				}),
+				{
+					pending: 'Uploading....',
+					success: 'Change avatar successfully.',
+					error: 'Change avatar failedly.',
+				},
+				{
+					pauseOnHover: false,
+				},
+			)
+			dispatch({ type: 'UPDATE_USER_AVATAR', payload: response.data.url })
+		} catch (error) {
+			toast.error(error.response.data.msg, {
+				className: 'toast-failed',
+				pauseOnHover: false,
+			})
+		} */
+	}
+
+	const handleInputChange = (e) => {
+		setData({ ...data, [e.target.name]: e.target.value })
+	}
+
+	const updateInfo = async () => {
+		let newAvatar = ''
+		// upload avatar
+		if (avatarFile) {
+			const formData = new FormData()
+			formData.append('avatar', avatarFile)
+			formData.append('cloudinary', true)
+			try {
+				const response = await toast.promise(
+					axios.post('/api/upload', formData, {
+						headers: { 'Content-Type': 'multipart/form-data', Authorization: accessToken },
+					}),
+					{
+						pending: {
+							render: () => 'Uploading...',
+							className: 'toast-pending',
+						},
+						success: {
+							render: () => 'Upload image successfully.',
+							className: 'toast-success',
+						},
+					},
+					{ pauseOnHover: false },
+				)
+				newAvatar = response.data.url
+				setAvatarFile(null)
+			} catch (error) {
+				toast.error(error.response.data.msg, {
+					className: 'toast-failed',
+					pauseOnHover: false,
+				})
+			}
+		}
+		// update info
+		if (name !== userInfo.name || newAvatar) {
+			// check name field
+			if (isEmpty(name))
+				return toast.error('Please fill in name field.', {
+					className: 'toast-failed',
+					pauseOnHover: false,
+				})
+			try {
+				const response = await axios.patch(
+					'/api/auth/user_update',
+					{ name: name || userInfo.name, avatar: newAvatar || userInfo.avatar },
+					{ headers: { Authorization: accessToken } },
+				)
+				const updatedUser = await axios.get('/api/auth/user', { headers: { Authorization: accessToken } })
+				dispatch({ type: 'SET_USER_INFO', payload: updatedUser.data.user })
+				toast.success(response.data.msg, {
+					className: 'toast-success',
+					pauseOnHover: false,
+				})
+			} catch (error) {
+				toast.error(error.response.data.msg, {
+					className: 'toast-failed',
+					pauseOnHover: false,
+				})
+			}
+		}
+	}
+	const updatePassword = async () => {
+		console.log('here')
+		// check password length
+		if (isLengthNotEnough(password))
+			return toast.error('Password must be at least 6 characters.', {
+				className: 'toast-failed',
+				pauseOnHover: false,
+			})
+		// check password match
+		if (!isMatch(password, cf_password))
+			return toast.error('Password did not match.', {
+				className: 'toast-failed',
+				pauseOnHover: false,
+			})
+		try {
+			const response = await axios.post(
+				'/api/auth/reset_password',
+				{ password },
+				{ headers: { Authorization: accessToken } },
+			)
+			toast.success(response.data.msg, {
+				className: 'toast-success',
+				pauseOnHover: false,
+			})
+		} catch (error) {
+			toast.error(error.response.data.msg, {
+				className: 'toast-failed',
+				pauseOnHover: false,
+			})
+		}
+	}
+
+	const handleSubmit = (e) => {
+		e.preventDefault()
+		if (name || avatarFile) updateInfo()
+		if (password) updatePassword()
+		setData(initDataState)
+	}
+
 	return (
 		<div className="profilelayout">
+			<ToastContainer />
 			{/* appbar */}
 			<div className="profilelayout_appbar">
 				<div className="appbar_wrapper">
@@ -54,7 +208,7 @@ const ProfileLayout = () => {
 							<User3LineIcon size={20} />
 							<p>profile</p>
 						</li>
-						<li>
+						<li onClick={handleLogout}>
 							<LogoutBoxLineIcon size={20} />
 							<p>logout</p>
 						</li>
@@ -72,7 +226,7 @@ const ProfileLayout = () => {
 							<p>23/03/2013</p>
 						</div>
 						<div className="feed_img">
-							<img src="https://source.unsplash.com/random" alt="feed_image" />
+							<img src="https://source.unsplash.com/random/16:9" alt="feed_image" />
 						</div>
 						<div className="feed_content">
 							<p>
@@ -91,20 +245,22 @@ const ProfileLayout = () => {
 						<label htmlFor="avatar">
 							<Upload2FillIcon size={80} />
 						</label>
-						<input type="file" accept="image/*" name="avatar" id="avatar" />
+						<input type="file" accept="image/*" name="avatar" id="avatar" onChange={handleChangeAvatar} />
 					</div>
-					<form className="profile_input">
+					<form className="profile_input" onSubmit={handleSubmit}>
 						<Input
 							type="text"
 							name="name"
 							text="Name"
 							icon={<User3LineIcon size={16} />}
 							defaultValue={userInfo.name}
+							handleChange={handleInputChange}
 						/>
 						<Input
 							type="text"
 							name="email"
 							text="Email"
+							disabled
 							icon={<MailLineIcon size={16} />}
 							defaultValue={userInfo.email}
 						/>
@@ -115,14 +271,16 @@ const ProfileLayout = () => {
 							icon={<LockPasswordLineIcon size={16} />}
 							icon2={visiblePass ? <EyeLineIcon size={16} /> : <EyeOffLineIcon size={16} />}
 							handleIconClick={handleIconClick}
+							handleChange={handleInputChange}
 						/>
 						<Input
 							type={visiblePass ? 'text' : 'password'}
-							name="confirmPassword"
+							name="cf_password"
 							text="Confirm Password"
 							icon={<LockPasswordLineIcon size={16} />}
 							icon2={visiblePass ? <EyeLineIcon size={16} /> : <EyeOffLineIcon size={16} />}
 							handleIconClick={handleIconClick}
+							handleChange={handleInputChange}
 						/>
 						<button>Update</button>
 					</form>

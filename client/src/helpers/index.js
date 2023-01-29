@@ -10,7 +10,7 @@ export const isEmail = (email) =>
 		)
 
 // check password length
-export const isLengthNotEnough = (password) => password.length < 6
+export const isLengthNotEnough = (password) => password?.length < 6
 
 // check password match
 export const isMatch = (password, cf_password) => password === cf_password

@@ -15,14 +15,14 @@ const Login = () => {
 			// check activation token
 			if (activation_token) {
 				const response = await axios.post('/api/auth/activation', { activation_token })
-				toast(response.data.msg, {
+				toast.success(response.data.msg, {
 					className: 'toast-success',
 					pauseOnHover: false,
 				})
 				setIsActived(true)
 			}
 		} catch (error) {
-			toast(error.response.data.msg, {
+			toast.error(error.response.data.msg, {
 				className: 'toast-failed',
 				pauseOnHover: false,
 			})
