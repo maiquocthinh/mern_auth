@@ -9,9 +9,34 @@ import ResetPass from './components/ResetPass'
 import Activate from './components/Activate'
 
 import './assets/scss/main.scss'
+import { useAuthStore } from './context/AuthHooks'
+import { useEffect } from 'react'
+import axios from 'axios'
 
 const App = () => {
-	const isLogined = !false
+	const { accessToken, isLoggedIn, dispatch } = useAuthStore()
+
+	// get access token
+	useEffect(() => {
+		if (localStorage.getItem('_appSigngin')) {
+			;(async () => {
+				const response = await axios.post('/api/auth/access', null)
+				dispatch({ type: 'SET_ACCESS_TOKEN', payload: response.data.access_token })
+			})()
+		}
+	}, [dispatch, isLoggedIn])
+
+	// get user info
+	useEffect(() => {
+		if (accessToken) {
+			;(async () => {
+				const response = await axios.get('/api/auth/user', {
+					headers: { Authorization: accessToken },
+				})
+				dispatch({ type: 'SET_USER_INFO', payload: response.data.user })
+			})()
+		}
+	}, [dispatch, accessToken])
 
 	return (
 		<BrowserRouter>
@@ -19,7 +44,7 @@ const App = () => {
 				<Route
 					path="/"
 					element={
-						isLogined ? (
+						isLoggedIn ? (
 							<ProfileLayout />
 						) : (
 							<AuthLayout>

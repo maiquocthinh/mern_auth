@@ -1,5 +1,5 @@
 const AuthReducer = (state, action) => {
-	switch (action) {
+	switch (action.type) {
 		case 'SIGNIN':
 			return {
 				...state,

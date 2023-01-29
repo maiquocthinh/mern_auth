@@ -68,7 +68,7 @@ const userController = {
 
 			// check user
 			const user = await User.findOne({ email: email })
-			if (!user) return res.secure(400).json({ msg: 'This email is not registered in our system.' })
+			if (!user) return res.status(400).json({ msg: 'This email is not registered in our system.' })
 
 			// check password
 			const isMatch = await bcrypt.compare(password, user.password)

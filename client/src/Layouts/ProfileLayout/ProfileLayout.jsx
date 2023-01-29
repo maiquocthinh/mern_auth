@@ -10,10 +10,12 @@ import EyeLineIcon from 'remixicon-react/EyeLineIcon'
 import EyeOffLineIcon from 'remixicon-react/EyeOffLineIcon'
 import Upload2FillIcon from 'remixicon-react/Upload2FillIcon'
 import { useState } from 'react'
+import { useAuthStore } from '../../context/AuthHooks'
 
 const ProfileLayout = () => {
 	const [sidebarVisible, setSidebarVisible] = useState(false)
 	const [visiblePass, setVisiblePass] = useState(false)
+	const { userInfo } = useAuthStore()
 
 	const handleIconClick = () => {
 		setVisiblePass(!visiblePass)
@@ -34,7 +36,7 @@ const ProfileLayout = () => {
 					</div>
 					<div className="appbar_avatar">
 						<div className="appbar_avatar__box">
-							<img src="https://source.unsplash.com/collection/happy-people" alt="avatar" />
+							<img src={userInfo.avatar} alt="avatar" />
 						</div>
 						<Menu2FillIcon onClick={handleSidebarVisible} />
 					</div>
@@ -65,7 +67,7 @@ const ProfileLayout = () => {
 					<div className="feed">
 						<div className="feed_date">
 							<div className="appbar_avatar__box">
-								<img src="https://source.unsplash.com/collection/happy-people" alt="avatar" />
+								<img src={userInfo.avatar} alt="avatar" />
 							</div>
 							<p>23/03/2013</p>
 						</div>
@@ -84,7 +86,7 @@ const ProfileLayout = () => {
 				<div className="profilelayout_content__profile">
 					<div className="profile_avatar">
 						<div className="profile_avatar__child">
-							<img src="https://source.unsplash.com/collection/happy-people" alt="avatar" />
+							<img src={userInfo.avatar} alt="avatar" />
 						</div>
 						<label htmlFor="avatar">
 							<Upload2FillIcon size={80} />
@@ -92,8 +94,20 @@ const ProfileLayout = () => {
 						<input type="file" accept="image/*" name="avatar" id="avatar" />
 					</div>
 					<form className="profile_input">
-						<Input type="email" name="name" text="Name" icon={<User3LineIcon size={16} />} />
-						<Input type="text" name="email" text="Email" icon={<MailLineIcon size={16} />} />
+						<Input
+							type="text"
+							name="name"
+							text="Name"
+							icon={<User3LineIcon size={16} />}
+							defaultValue={userInfo.name}
+						/>
+						<Input
+							type="text"
+							name="email"
+							text="Email"
+							icon={<MailLineIcon size={16} />}
+							defaultValue={userInfo.email}
+						/>
 						<Input
 							type={visiblePass ? 'text' : 'password'}
 							name="password"

@@ -61,7 +61,7 @@ const Register = () => {
 				className: 'toast-failed',
 				pauseOnHover: false,
 			})
-
+		// register
 		try {
 			const response = await axios.post('/api/auth/register', { name, email, password })
 			toast(response.data.msg, {
@@ -92,7 +92,7 @@ const Register = () => {
 						handleChange={handleInputChange}
 					/>
 					<Input
-						type="email"
+						type="text"
 						name="email"
 						text="Email"
 						icon={<MailLineIcon size={16} />}
