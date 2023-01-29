@@ -50,6 +50,7 @@ const Login = () => {
 			toast.success(response.data.msg, {
 				className: 'toast-success',
 				pauseOnHover: false,
+				autoClose: 3000,
 			})
 			// delay redirect
 			setTimeout(() => {
@@ -91,7 +92,7 @@ const Login = () => {
 					/>
 					<div className="login_btn">
 						<button type="submit">login</button>
-						<button>
+						<button type="button">
 							signin with <GoogleFillIcon size={16} style={{ marginLeft: '4px' }} />
 						</button>
 					</div>

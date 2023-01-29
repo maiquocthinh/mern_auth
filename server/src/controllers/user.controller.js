@@ -117,7 +117,7 @@ const userController = {
 			const accessToken = createToken.access({ id: user._id })
 
 			// send mail
-			const url = `http://localhost:3000/auth/reset-password/${accessToken}`
+			const url = `http://localhost:3000/reset-password/${accessToken}`
 			await sendEmail.ResetPassword(email, url, 'Reset your password', user.name)
 
 			// success

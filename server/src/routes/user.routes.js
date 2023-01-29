@@ -13,5 +13,6 @@ route.post('/api/auth/reset_password', auth, userController.reset)
 route.get('/api/auth/user', auth, userController.info)
 route.patch('/api/auth/user_update', auth, userController.update)
 route.get('/api/auth/logout', userController.logout)
+route.post('/api/auth/google_signin', userController.googleSignin)
 
 module.exports = route
