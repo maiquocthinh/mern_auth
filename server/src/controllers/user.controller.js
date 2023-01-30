@@ -77,7 +77,8 @@ const userController = {
 			// create refresh token
 			const refreshToken = createToken.refresh({ id: user._id })
 			res.cookie('_apprftoken', refreshToken, {
-				// httpOnly: true,
+				httpOnly: false,
+				secure: true,
 				path: 'api/auth/access',
 				maxAge: 24 * 60 * 60 * 1000,
 			})
@@ -207,7 +208,8 @@ const userController = {
 				const refreshToken = createToken.refresh({ id: user._id })
 				// store cookie
 				res.cookie('_apprftoken', refreshToken, {
-					// httpOnly: true,
+					httpOnly: false,
+					secure: true,
 					path: 'api/auth/access',
 					maxAge: 24 * 60 * 60 * 1000,
 				})
@@ -229,7 +231,8 @@ const userController = {
 				const refreshToken = createToken.refresh({ id: user._id })
 				// store cookie
 				res.cookie('_apprftoken', refreshToken, {
-					// httpOnly: true,
+					httpOnly: false,
+					secure: true,
 					path: 'api/auth/access',
 					maxAge: 24 * 60 * 60 * 1000,
 				})
