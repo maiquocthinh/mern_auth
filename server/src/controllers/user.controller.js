@@ -79,6 +79,7 @@ const userController = {
 			res.cookie('_apprftoken', refreshToken, {
 				httpOnly: false,
 				secure: true,
+				sameSite: 'none',
 				path: 'api/auth/access',
 				maxAge: 24 * 60 * 60 * 1000,
 			})
@@ -210,6 +211,7 @@ const userController = {
 				res.cookie('_apprftoken', refreshToken, {
 					httpOnly: false,
 					secure: true,
+					sameSite: 'none',
 					path: 'api/auth/access',
 					maxAge: 24 * 60 * 60 * 1000,
 				})
