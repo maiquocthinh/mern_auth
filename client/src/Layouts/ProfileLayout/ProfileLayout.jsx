@@ -23,7 +23,7 @@ const ProfileLayout = () => {
 	const [avatarFile, setAvatarFile] = useState()
 	const { userInfo, accessToken, dispatch } = useAuthStore()
 	const navigate = useNavigate()
-	const initDataState = { name: userInfo.name, password: '', cf_password: '' }
+	const initDataState = { name: '', password: '', cf_password: '' }
 	const [data, setData] = useState(initDataState)
 	const { name, password, cf_password } = data
 
@@ -105,7 +105,7 @@ const ProfileLayout = () => {
 				newAvatar = response.data.url
 				setAvatarFile(null)
 			} catch (error) {
-				toast.error(error.response.data.msg, {
+				return toast.error(error.response.data.msg, {
 					className: 'toast-failed',
 					pauseOnHover: false,
 				})
@@ -113,12 +113,6 @@ const ProfileLayout = () => {
 		}
 		// update info
 		if (name !== userInfo.name || newAvatar) {
-			// check name field
-			if (isEmpty(name))
-				return toast.error('Please fill in name field.', {
-					className: 'toast-failed',
-					pauseOnHover: false,
-				})
 			try {
 				const response = await axios.patch(
 					'/api/auth/user_update',
