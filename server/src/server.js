@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser')
+const cors = require('cors')
 const app = express()
 require('dotenv').config()
 const useRoutes = require('./routes')
@@ -8,6 +9,11 @@ const useRoutes = require('./routes')
 // constant
 const PORT = process.env.PORT || 8000
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/auth_mern'
+const corsOptions = {
+	origin: process.env.ALLOWED_ORIGIN,
+	credentials: true,
+	optionsSuccessStatus: 200,
+}
 
 // database
 mongoose.connect(MONGO_URI, { useUnifiedTopology: true }, (err) => {
@@ -20,6 +26,7 @@ mongoose.connect(MONGO_URI, { useUnifiedTopology: true }, (err) => {
 })
 
 // middleware
+app.use(cors(corsOptions))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())

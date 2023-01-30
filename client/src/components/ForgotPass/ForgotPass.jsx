@@ -5,7 +5,7 @@ import MailLineIcon from 'remixicon-react/MailLineIcon'
 import { isEmail, isEmpty } from '../../helpers'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import axios from 'axios'
+import { axiosClient as axios } from '../../helpers'
 
 const Login = () => {
 	const [email, setEmail] = useState('')

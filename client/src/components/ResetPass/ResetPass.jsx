@@ -7,7 +7,7 @@ import { useState } from 'react'
 import { isEmpty, isLengthNotEnough, isMatch } from '../../helpers'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import axios from 'axios'
+import { axiosClient as axios } from '../../helpers'
 import { useNavigate, useParams } from 'react-router-dom'
 
 const Login = () => {

@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import '../Login/Login.scss'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import axios from 'axios'
+import { axiosClient as axios } from '../../helpers'
 
 const Login = () => {
 	const navigate = useNavigate()

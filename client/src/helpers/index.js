@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 // check empty fields
 export const isEmpty = (value) => !value
 
@@ -14,3 +16,9 @@ export const isLengthNotEnough = (password) => password?.length < 6
 
 // check password match
 export const isMatch = (password, cf_password) => password === cf_password
+
+// axios client
+export const axiosClient = axios.create({
+	baseURL: process.env.REACT_APP_API_URL,
+	withCredentials: true,
+})

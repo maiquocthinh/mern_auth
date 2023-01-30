@@ -11,7 +11,7 @@ import Activate from './components/Activate'
 import './assets/scss/main.scss'
 import { useAuthStore } from './context/AuthHooks'
 import { useEffect } from 'react'
-import axios from 'axios'
+import { axiosClient as axios } from './helpers'
 
 const App = () => {
 	const { accessToken, isLoggedIn, dispatch } = useAuthStore()

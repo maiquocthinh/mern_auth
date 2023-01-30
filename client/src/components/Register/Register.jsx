@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom'
 import { isEmail, isEmpty, isLengthNotEnough, isMatch } from '../../helpers'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import axios from 'axios'
+import { axiosClient as axios } from '../../helpers'
 
 const initDataState = {
 	name: '',
