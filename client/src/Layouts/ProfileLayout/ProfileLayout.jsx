@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom'
 import { axiosClient as axios } from '../../helpers'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { isEmpty, isLengthNotEnough, isMatch } from '../../helpers'
+import { isLengthNotEnough, isMatch } from '../../helpers'
 
 const ProfileLayout = () => {
 	const [sidebarVisible, setSidebarVisible] = useState(false)
