@@ -31,7 +31,7 @@ const userController = {
 			const activationToken = createToken.activation(userInfo)
 
 			// send mail
-			const url = `http://localhost:3000/api/auth/activate/${activationToken}`
+			const url = `${process.env.FRONTEND_URL}/api/auth/activate/${activationToken}`
 			await sendEmail.verifyEmail(email, url, 'Verify your email')
 
 			// registration success
@@ -77,7 +77,7 @@ const userController = {
 			// create refresh token
 			const refreshToken = createToken.refresh({ id: user._id })
 			res.cookie('_apprftoken', refreshToken, {
-				httpOnly: true,
+				// httpOnly: true,
 				path: 'api/auth/access',
 				maxAge: 24 * 60 * 60 * 1000,
 			})
@@ -117,7 +117,7 @@ const userController = {
 			const accessToken = createToken.access({ id: user._id })
 
 			// send mail
-			const url = `http://localhost:3000/reset-password/${accessToken}`
+			const url = `${process.env.FRONTEND_URL}/reset-password/${accessToken}`
 			await sendEmail.ResetPassword(email, url, 'Reset your password', user.name)
 
 			// success
@@ -207,7 +207,7 @@ const userController = {
 				const refreshToken = createToken.refresh({ id: user._id })
 				// store cookie
 				res.cookie('_apprftoken', refreshToken, {
-					httpOnly: true,
+					// httpOnly: true,
 					path: 'api/auth/access',
 					maxAge: 24 * 60 * 60 * 1000,
 				})
@@ -229,7 +229,7 @@ const userController = {
 				const refreshToken = createToken.refresh({ id: user._id })
 				// store cookie
 				res.cookie('_apprftoken', refreshToken, {
-					httpOnly: true,
+					// httpOnly: true,
 					path: 'api/auth/access',
 					maxAge: 24 * 60 * 60 * 1000,
 				})

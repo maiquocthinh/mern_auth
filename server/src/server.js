@@ -10,7 +10,7 @@ const useRoutes = require('./routes')
 const PORT = process.env.PORT || 8000
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/auth_mern'
 const corsOptions = {
-	origin: process.env.ALLOWED_ORIGIN,
+	origin: process.env.FRONTEND_URL,
 	credentials: true,
 	optionsSuccessStatus: 200,
 }
